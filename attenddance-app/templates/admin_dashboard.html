@@ -1,0 +1,19 @@
+<h1>管理者ダッシュボード</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ユーザー名</th>
+            <th>役割</th>
+            <th>詳細</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.role }}</td>
+            <td><a href="{{ url_for('user_details', user_id=user.id) }}">詳細</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン</title>
+    <title>新規登録</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-    <h1>ログイン</h1>
+    <h1>新規登録</h1>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div>
@@ -58,13 +58,13 @@
             </div>
         {% endif %}
     {% endwith %}
-    <form method="POST" action="/login">
-        <label for="username">UserID:</label>
+    <form method="POST" action="/register">
+        <label for="username">ユーザー名:</label>
         <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
+        <label for="password">パスワード:</label>
         <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">ログイン</button>
+        <button type="submit">登録</button>
     </form>
-    <p>アカウントは持っていますか？ <a href="/register">新規登録はこちら</a></p>
+    <p>すでにアカウントをお持ちの方は <a href="/login">ログイン</a></p>
 </body>
 </html>
