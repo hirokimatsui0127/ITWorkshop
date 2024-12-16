@@ -4,11 +4,15 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, cur
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from models import db, User, Attendance, StressCheck
+from flask_migrate import Migrate
 from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
+
+# Migrateの設定
+migrate = Migrate(app, db)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -105,3 +109,7 @@ def stress_check():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+with app.app_context():
+    db.create_all()  # これでテーブルが作成される

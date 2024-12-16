@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Level Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .analysis-container {
+            border: 2px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        a {
+            text-decoration: none;
+            color: blue;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stress Level Analysis</h1>
+    {% if plot_url %}
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Stress Level Graph">
+    {% else %}
+        <p>No data available for analysis.</p>
+    {% endif %}
+    <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
