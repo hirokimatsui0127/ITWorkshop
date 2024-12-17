@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stress Level Analysis</title>
+    <title>ストレスレベルのグラフ</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,11 +28,15 @@
 </head>
 <body>
     <h1>Stress Level Analysis</h1>
+    
     {% if plot_url %}
+        <h2>Stress Level Graph</h2>
         <img src="data:image/png;base64,{{ plot_url }}" alt="Stress Level Graph">
+
     {% else %}
-        <p>No data available for analysis.</p>
+        <p>No data available for the graph.</p>
     {% endif %}
-    <a href="/dashboard">Back to Dashboard</a>
+
+    <a href="{{ url_for('dashboard') }}">メモに戻る</a><br><br>
 </body>
 </html>
