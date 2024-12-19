@@ -4,111 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-            text-align: center;
-        }
-        h1, h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            text-align: left;
-            max-width: 400px;
-            margin: 0 auto 30px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="range"], textarea {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            font-size: 1em;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .table-container {
-            overflow-y: auto;
-            max-height: 400px;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-            position: sticky;
-            top: 0;
-        }
-        .pagination {
-            margin-top: 20px;
-        }
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 8px 12px;
-            margin: 0 5px;
-            border: 1px solid #ddd;
-            text-decoration: none;
-            background-color: #f9f9f9;
-            color: #007bff;
-            border-radius: 4px;
-        }
-        .pagination a:hover {
-            background-color: #ddd;
-        }
-        .pagination .current-page {
-            background-color: #007bff;
-            color: #fff;
-        }
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>ようこそ</h1>
 
     <!-- メンタルチェックフォーム -->
     <form action="{{ url_for('dashboard') }}" method="POST">
-        <label for="stress_level">ストレスレベル (0-100):</label>
-        <input type="range" id="stress_level" name="stress_level" min="0" max="100" step="5" value="0" required>
-        <span id="stress_value">0</span>
+        <label for="stress_level">ストレスレベル :<span id="stress_value">0</span></label>
+        <input type="range" id="stress_level" name="stress_level" min="0" max="100" step="5" value="0" required oninput="updateStressValue()">
+        
 
         <label for="mood_description">気持ちメモ:</label>
         <textarea id="mood_description" name="mood_description" rows="4" placeholder="ここに気持ちを記入..." maxlength="500"></textarea>
 
-        <button type="submit">記録する</button>
+        <button type="submit">吐き出す</button>
     </form>
 
     <!-- エラーメッセージ -->
@@ -119,7 +29,7 @@
     {% endif %}
 
     <!-- ストレス履歴 -->
-    <h2>ストレス履歴</h2>
+    <h2>過去の気持ち</h2>
     <div class="table-container">
         <table>
             <thead>
@@ -157,5 +67,14 @@
 
     <!-- ログアウトリンク -->
     <a href="{{ url_for('logout') }}">ログアウト</a>
+
+    <script>
+        // スライダーの値をリアルタイムで表示する関数
+        function updateStressValue() {
+            const slider = document.getElementById('stress_level');
+            const output = document.getElementById('stress_value');
+            output.textContent = slider.value;
+        }
+    </script>
 </body>
 </html>
