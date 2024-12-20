@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <h1>ようこそ</h1>
@@ -28,8 +28,11 @@
         </div>
     {% endif %}
 
+    <!-- グラフリンク -->
+    <h2><a href="{{ url_for('analysis') }}">ストレスグラフを見る</a></h2>
+
     <!-- ストレス履歴 -->
-    <h2>過去の気持ち</h2>
+    <h3>過去の気持ち</h3>
     <div class="table-container">
         <table>
             <thead>
@@ -44,12 +47,15 @@
                 <tr>
                     <td>{{ check['date'] }}</td>
                     <td>{{ check['stress_level'] }}</td>
-                    <td>{{ check['mood_description'] }}</td>
+                    <td class="tooltip-cell" data-label="気持ちメモ">
+                        {{ check['mood_description'] }}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
 
     <!-- ページネーション -->
     <div class="pagination">
@@ -62,9 +68,6 @@
         {% endif %}
     </div>
 
-    <!-- グラフリンク -->
-    <a href="{{ url_for('analysis') }}">ストレスグラフを見る</a><br>
-
     <!-- ログアウトリンク -->
     <a href="{{ url_for('logout') }}">ログアウト</a>
 
@@ -74,7 +77,17 @@
             const slider = document.getElementById('stress_level');
             const output = document.getElementById('stress_value');
             output.textContent = slider.value;
-        }
+
+        // AJAXでサーバーにストレスレベルを送信
+        fetch('/save_stress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ stress_level: slider.value })
+        });
+}
+
     </script>
 </body>
 </html>

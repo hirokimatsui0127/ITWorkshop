@@ -50,16 +50,25 @@ def generate_plot(dates, stress_levels, title):
     ax.set_title(title)
     ax.set_xlabel('Date and Time')
     ax.set_ylabel('Stress Level (0-100)')
+    ax.set_ylim(0, 100)  # Y軸の範囲を0-100に固定
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
     ax.xaxis.set_major_locator(mdates.HourLocator(interval=1))
     plt.xticks(rotation=45)
     plt.tight_layout()
+
+    # ストレスレベル50の位置に基準線を引く
+    ax.axhline(y=50, color='r', linestyle='--', label='Threshold (50)')
+
+    # 基準線のラベルを追加（凡例）
+    ax.legend()
 
     img = io.BytesIO()
     plt.savefig(img, format='png')
     img.seek(0)
     plt.close(fig)
     return base64.b64encode(img.getvalue()).decode('utf8')
+
+
 
 # アプリ起動時のテーブル作成
 create_tables()
@@ -108,15 +117,15 @@ def dashboard():
 
     user_id = session['user_id']
     page = request.args.get('page', 1, type=int)
-    per_page = 5
+    per_page = 10
     error = None
 
     if request.method == 'POST':
         stress_level = request.form['stress_level']
         mood_description = request.form['mood_description']
 
-        if len(mood_description) > 500:
-            error = 'コメントは500文字以内で入力してください。'
+        if len(mood_description) > 200:
+            error = 'コメントは200文字以内で入力してください。'
         else:
             date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             with get_db_connection() as conn:
