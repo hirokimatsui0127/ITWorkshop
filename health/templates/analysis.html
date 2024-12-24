@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stress Level Analysis</title>
+    <title>メンタルチェック</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Stress Level Analysis</h1>
+    <h1>ストレス レベル アナリクス</h1>
 
     <!-- 日付選択フォーム -->
     <form action="{{ url_for('analysis') }}" method="GET">
@@ -20,7 +20,7 @@
         <h2><a href="{{ url_for('dashboard') }}">メモに戻る</a></h2>
         <img src="data:image/png;base64,{{ plot_url }}" alt="Stress Level Graph">
     {% else %}
-        <p>No data available for the selected date.</p>
+        <p>該当のデータはありません。</p>
     {% endif %}
 
 

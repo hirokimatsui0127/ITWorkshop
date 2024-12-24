@@ -9,6 +9,8 @@ import matplotlib.dates as mdates
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -51,8 +53,11 @@ def generate_plot(dates, stress_levels, title):
     ax.set_xlabel('Date and Time')
     ax.set_ylabel('Stress Level (0-100)')
     ax.set_ylim(0, 100)  # Y軸の範囲を0-100に固定
+    
+    # 日付のフォーマットと間隔を設定
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
-    ax.xaxis.set_major_locator(mdates.HourLocator(interval=1))
+    # 最大目盛り数を設定して過剰な目盛り生成を防ぐ
+    ax.xaxis.set_major_locator(mdates.AutoDateLocator(maxticks=10))
     plt.xticks(rotation=45)
     plt.tight_layout()
 
@@ -67,6 +72,7 @@ def generate_plot(dates, stress_levels, title):
     img.seek(0)
     plt.close(fig)
     return base64.b64encode(img.getvalue()).decode('utf8')
+
 
 
 
