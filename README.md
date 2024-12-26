@@ -7,10 +7,10 @@
 　現在の気持ちと、その時のストレス値をメモ書きしてグラフに表示できるようにすることによって、日毎のメンタルの状態を可視化することができる
 
 ## 使用技術
-フロントエンド：HTML,CSS,JavaScript
-バックエンド：Python
-データベース：SQlite
-開発ツール：Visual Studio Code
+フロントエンド：HTML,CSS,JavaScript　　
+バックエンド：Python　　
+データベース：SQlite　　
+開発ツール：Visual Studio Code　　
 
 ## テスト用アカウント　
 ID:test  password:1 
